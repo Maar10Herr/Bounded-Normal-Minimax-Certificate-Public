@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this certificate or implementation, cite the versioned release and paper."
+title: "Deterministic Certification for the Bounded Normal Mean"
+type: software
+version: 0.1.0
+date-released: 2026-08-19
+authors:
+  - family-names: Herrmann
+    given-names: Maarten Linus
+    orcid: "https://orcid.org/0009-0005-8721-6588"
+repository-code: "https://github.com/Maar10Herr/Bounded-Normal-Minimax-Certificate-Public"
+license: MIT
+abstract: >-
+  Deterministic adaptive-support computation and an independent
+  outward-rounded Arb certificate for the bounded normal mean problem at m=4.
+keywords:
+  - bounded normal mean
+  - minimax estimation
+  - least favorable prior
+  - interval arithmetic
+  - computer-assisted proof
