@@ -1,0 +1,39 @@
+{
+  "format": "bounded-normal-mean-arb-certificate-v1",
+  "m": "4",
+  "prior": {
+    "levels": [
+      "0.5984699814893856",
+      "2.1264117002421385",
+      "4"
+    ],
+    "level_masses": [
+      "0.36699366016033996",
+      "0.3994285510645993",
+      "0.23357778877506074"
+    ]
+  },
+  "settings": {
+    "tail_cutoff": "8",
+    "separation_tolerance": "1e-8",
+    "risk_panels": 2048,
+    "curvature_cells": 512,
+    "max_nodes": 5001,
+    "precision_bits": 192
+  },
+  "claims": {
+    "bayes_risk_interval": [
+      "0.815088756",
+      "0.815088757"
+    ],
+    "worst_case_risk_interval": [
+      "0.815088756",
+      "0.815088764"
+    ],
+    "minimax_risk_interval": [
+      "0.815088756",
+      "0.815088764"
+    ],
+    "minimax_gap_upper": "0.000000008"
+  }
+}

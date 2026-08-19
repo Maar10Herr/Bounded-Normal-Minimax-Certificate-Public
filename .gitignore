@@ -1,0 +1,19 @@
+.DS_Store
+.venv/
+.uv-cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+tmp/
+*.log
+*.aux
+*.bbl
+*.blg
+*.out
+
+# Only reviewed final certificates and the paper PDF belong in the release.
+certificates/exploratory/
+paper/*.tex
+paper/*.bib
