@@ -10,8 +10,9 @@ normal mean bounded to `[-4, 4]` under squared-error loss.
 > [!NOTE]
 > **Computer-assisted research result.** The final statement is an
 > outward-rounded Arb certificate for the scalar bounded-normal model at
-> `m = 4`. The verifier checks a supplied prior and its global risk bound; it
-> does not certify finite-time convergence of the discovery algorithm.
+> `m = 4`. The verifier checks a supplied prior and its global risk bound.
+> Finite-time convergence of the discovery algorithm is outside the certificate
+> scope.
 
 **[Read the paper](paper/Bounded_Normal_Mean_Minimax_Certificate.pdf)** ·
 **[Inspect the certificate](certificates/final/m4_epsilon_1e-8_arb.json)** ·
@@ -50,7 +51,8 @@ split equally between positive and negative atoms.
 
 ## Verify the result
 
-The lockfile targets CPython 3.13 and includes NumPy, Pillow, and python-flint.
+The lockfile targets CPython 3.13 and pins NumPy, Pillow, python-flint, and the
+pytest development dependency.
 
 ```sh
 uv sync --frozen
@@ -61,7 +63,8 @@ uv run python src/verification/verify_certificate_arb.py \
 Run the corruption audit and complete test suite:
 
 ```sh
-uv run python scripts/run_corruption_audit.py
+uv run python -m scripts.run_corruption_audit \
+  --output /tmp/bounded-normal-corruption-audit.json
 uv run pytest -q
 ```
 
@@ -90,9 +93,8 @@ The discovery and verification paths use different numerical representations:
 | Corruption audit | Mutated certificates and hostile numerical cases | Tests fail-closed behavior |
 
 The final verifier reconstructs posterior ratios, Bayes risk, curvature
-enclosures, and complete branch coverage from the compact certificate. It
-shares the mathematical specification with the discovery solver but does not
-import its optimization state or branch tree.
+enclosures, and complete branch coverage from the compact certificate. Its
+inputs exclude the discovery solver's optimization state and branch tree.
 
 ## Contribution and relation to prior work
 
