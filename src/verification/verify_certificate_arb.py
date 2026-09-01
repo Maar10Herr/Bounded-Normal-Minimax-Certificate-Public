@@ -115,6 +115,8 @@ def _finite_decimal(value: Any, label: str) -> Decimal:
 def validate_certificate_data(data: dict[str, Any]) -> dict[str, Any]:
     """Validate the compact certificate before any expensive computation."""
 
+    if not isinstance(data, dict):
+        raise ValueError("certificate must be a JSON object")
     if data.get("format") not in {
         "bounded-normal-mean-arb-certificate-v0",
         "bounded-normal-mean-arb-certificate-v1",
@@ -816,7 +818,11 @@ def main() -> None:
     parser.add_argument("--max-nodes", type=int)
     args = parser.parse_args()
     supplied = json.loads(args.certificate.read_text(encoding="utf-8"))
-    settings = supplied.get("settings", {})
+    if not isinstance(supplied, dict):
+        raise SystemExit("certificate must be a JSON object")
+    settings = supplied.get("settings")
+    if not isinstance(settings, dict):
+        raise SystemExit("settings must be an object")
     result = verify(
         args.certificate,
         risk_panels=(
