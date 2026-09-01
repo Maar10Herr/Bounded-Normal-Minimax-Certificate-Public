@@ -10,6 +10,8 @@ import sys
 import unittest
 from decimal import Decimal
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 CERTIFICATE = ROOT / "certificates" / "final" / "m4_epsilon_1e-8_arb.json"
@@ -18,6 +20,7 @@ if (ROOT / ".vendor").exists():
     sys.path.insert(0, str(ROOT / ".vendor"))
 
 from src.verification.verify_certificate_arb import (
+    main,
     validate_certificate_data,
     verify,
 )
@@ -72,6 +75,28 @@ class VerifierCorruptionTests(unittest.TestCase):
             data = copy.deepcopy(self.certificate())
             data["m"] = field
             self.assert_rejected(data)
+
+    def test_non_object_certificate_is_rejected(self) -> None:
+        with self.assertRaisesRegex(ValueError, "JSON object"):
+            validate_certificate_data([])  # type: ignore[arg-type]
+
+    def test_cli_rejects_non_object_certificate(self) -> None:
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "invalid.json"
+            path.write_text("[]", encoding="utf-8")
+            with patch("sys.argv", ["verify_certificate_arb.py", str(path)]):
+                with self.assertRaisesRegex(SystemExit, "JSON object"):
+                    main()
+
+    def test_cli_rejects_non_object_settings(self) -> None:
+        data = self.certificate()
+        data["settings"] = []
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "invalid.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            with patch("sys.argv", ["verify_certificate_arb.py", str(path)]):
+                with self.assertRaisesRegex(SystemExit, "settings must be an object"):
+                    main()
 
     def test_inverted_claim_interval_is_rejected(self) -> None:
         data = copy.deepcopy(self.certificate())
