@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this certificate or implementation, cite the paper and versioned release."
 title: "Bounded Normal Minimax Certificate"
 type: software
-version: 0.2.0
-date-released: 2026-08-19
+version: 0.2.1
+date-released: 2026-09-07
 authors:
   - family-names: Herrmann
     given-names: Maarten Linus
@@ -30,4 +30,4 @@ preferred-citation:
   year: 2026
   month: 8
   repository-code: "https://github.com/Maar10Herr/Bounded-Normal-Minimax-Certificate-Public"
-  notes: "Research paper, release 0.2.0."
+  notes: "Research paper, software release 0.2.1."
