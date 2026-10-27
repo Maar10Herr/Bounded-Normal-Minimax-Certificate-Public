@@ -52,7 +52,7 @@ split equally between positive and negative atoms.
 
 ## Verify the result
 
-The lockfile targets CPython 3.13 and pins NumPy, Pillow, python-flint, and the
+The lockfile targets CPython 3.13 and pins NumPy, python-flint, and the
 pytest development dependency.
 
 ```sh
