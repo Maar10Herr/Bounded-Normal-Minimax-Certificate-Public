@@ -1,0 +1,49 @@
+\section{Introduction}
+\label{sec:introduction}
+
+A worst-case risk guarantee for the bounded-normal mean requires a global
+calculation over a continuum. Let
+\[
+  Y=\theta+Z,\qquad Z\sim\Normal(0,1),\qquad \theta\in[-m,m],
+\]
+and use loss $(d(Y)-\theta)^2$.  The objective is the minimax value
+\[
+  \vstar=\inf_d\sup_{\theta\in[-m,m]}
+    \E_\theta\{d(Y)-\theta\}^2 .
+\]
+
+Montiel Olea and Zubova \cite{montielzubova2026} recently gave a stochastic
+mirror-ascent method with an ex ante equally spaced parameter grid and
+finite-sample probability guarantees.  Their paper prompted the present
+project.  Our question is different: after a candidate finitely supported
+prior has been found, can a deterministic program certify its Bayes risk and
+the global risk of its Bayes rule without a parameter grid or Monte Carlo?
+
+For the $m=4$ instance, the final
+artifact contains three positive support levels, outward-rounded
+quadrature and tail enclosures, and a continuous branch-and-bound proof.
+A second program reconstructs the calculation from the compact certificate
+without importing the discovery solver.
+
+\paragraph{Roadmap.}
+Section~\ref{sec:lineage} separates inherited theory, independent derivations,
+and implementation.  Section~\ref{sec:formulation} proves the exact
+directional derivative and minimax bracket.  Section~\ref{sec:flow} develops
+the posterior-flow representation.  Sections~\ref{sec:separation} and
+\ref{sec:algorithm} give the continuous separator and adaptive procedure.
+Section~\ref{sec:verifier} describes the independent verifier.
+Sections~\ref{sec:results}--\ref{sec:comparison} report tests and compare with
+Montiel Olea and Zubova.  The appendices supply all proof algebra, numerical
+error bounds, lineage details, and exact reproduction commands.
+
+\paragraph{Contribution and lineage.}
+Kempthorne \cite{kempthorne1987} supplies adaptive atom insertion, joint
+optimization of weights and locations, pruning, the directional derivative,
+and the Bayes-risk/maximum-risk stopping bracket.  Interval arithmetic,
+dependency-aware enclosures and semiconvex branch-and-bound provide the
+numerical foundations.  This paper contributes a specialized deterministic
+bounded-normal implementation, a continuous separator, and an independent
+outward-rounded certificate.  Lemma~\ref{lem:common-mean-bound} gives a
+posterior-moment enclosure derived for this implementation; the ablation shows
+a four-node reduction at $m=4$, so it is treated as a supporting device rather
+than the principal result.

@@ -1,0 +1,39 @@
+\section{Detailed prior-art comparison}
+\label{app:lineage}
+
+Kempthorne's Section 3 begins with a finite prior, locally maximizes Bayes risk
+over weights and locations, globally maximizes the Bayes-rule risk, stops when
+maximum risk equals Bayes risk, and otherwise inserts the maximizer
+\cite[pp.~175--177]{kempthorne1987}.  He also notes that zero weights or
+coincident locations can reduce support.  His implementation brackets local
+risk maxima by a parameter grid and refines them by golden-section search
+\cite[p.~177]{kempthorne1987}.  The present verifier adds outward rounding
+and complete continuous branch coverage to that optimization lineage.
+
+Gourdin et al.\ terminate their Lipschitz global optimizer when the gap
+between an upper bound and incumbent falls below a chosen tolerance
+\cite[pp.~19--21]{gourdin1994}.  Their bounded-normal discussion fixes a
+finite-dimensional prior form justified for a small range of $m$
+\cite[pp.~25--26]{gourdin1994}.  The present solver combines adaptive support
+generation with an interval-certified continuous risk oracle.
+
+Dytso et al.\ \cite{dytso2022} give support-cardinality reductions under a
+finite observation alphabet and use projected gradient ascent in numerical
+examples.  Their stated finite-alphabet theorem addresses a different
+observation space from the scalar Gaussian model.  Kent et al.\
+\cite{kent2021} assume derivative and local linear-minimization oracles and
+use stochastic subroutines.  Guggenberger and Huang
+\cite{guggenberger2025} obtain iterationwise brackets in a
+finite/discretized fictitious-play problem with grid-based best responses.
+These results locate the current work within broader finite-mixture and
+minimax-optimization methods.
+
+Maruyama and Matsuda \cite{maruyama2025} provide the closest located
+interval-assisted normal-mean minimaxity precedent.  They verify inequalities
+for a Bayes estimator under a fixed half-Cauchy prior in a multivariate
+problem.  The certified object here is instead the Bayes/maximum-risk gap for
+a least-favorable prior in the bounded scalar problem.
+
+This comparison is source-grounded and records the closest antecedents used in
+the paper.  Future revisions should incorporate any closer continuous,
+outward-rounded bounded-normal certificate brought to the author's attention.

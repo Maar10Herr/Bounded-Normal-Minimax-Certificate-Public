@@ -1,0 +1,38 @@
+\section{Scope and conclusion}
+\label{sec:conclusion}
+
+The final certificate concerns a one-dimensional normal location model with
+unit variance, squared loss, bounded symmetric parameter space, and a supplied
+finite symmetric prior.  Kempthorne's convergence theorem governs the abstract
+exchange procedure; the executable guarantee here is post hoc: acceptance by
+the independent verifier proves the reported minimax bracket.  The specialized
+branch tree has no finite worst-case complexity bound in this release.  Its
+trusted base is CPython, python-flint, Arb/FLINT and the verifier source.  The
+$m=4$ result receives the final Arb certificate; the remaining sweep records
+float64 discovery evidence.
+
+The paper combines established least-favorable-prior optimization with a
+continuous separator and independent outward-rounded verification.  The
+common-mean enclosure gives a modest node reduction in the reported ablation;
+the compact executable certificate is the main deliverable.  For $m=4$ it
+proves a minimax-risk interval of width below $5.026\times10^{-9}$ and exposes
+every numerical tolerance required to replay that statement.
+
+\section*{Declarations}
+
+\paragraph{Code and reproducibility.}
+The implementation, final certificate, lockfile and reproduction commands are
+available at
+\href{https://github.com/Maar10Herr/Bounded-Normal-Minimax-Certificate-Public}
+{github.com/Maar10Herr/Bounded-Normal-Minimax-Certificate-Public}.
+
+\paragraph{Software and hardware.}
+The recorded environment used CPython 3.13.5, NumPy 2.3.2, Pillow 11.3.0 and
+python-flint 0.8.0 on macOS 15.7.3 arm64.  Reported timings are descriptive
+machine measurements; the certified inequalities follow from the outward-
+rounded verifier.
+
+\paragraph{Acknowledgements.}
+The project was motivated by the bounded-normal minimax work of Jos\'e Luis
+Montiel Olea and Ekaterina Zubova; their work and the classical literature
+are cited throughout.

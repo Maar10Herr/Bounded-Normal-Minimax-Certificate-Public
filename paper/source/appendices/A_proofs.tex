@@ -1,0 +1,58 @@
+\section{Proof details}
+\label{app:proofs}
+
+\subsection{Differentiation of Bayes risk}
+
+Fix $\alpha_0<1$.  For $\alpha\in[0,\alpha_0]$,
+$f_{0,\alpha}\ge(1-\alpha_0)f_0$.  Directly expanding the differentiated
+integrand in Proposition~\ref{prop:direction} reduces it to the sum of
+$-f_2+f_1^2/f_0$ and
+$(t-\delta_\pi)^2\phiN(\,\cdot-t)$.  The first absolute value is bounded by
+$f_2+m^2f_0$, and the second by $4m^2\phiN(\,\cdot-t)$.  Both are integrable.
+Dominated convergence therefore justifies the right derivative.  The same
+argument applies to a direction given by any bounded-support probability
+measure after integrating the atom formula in $t$.
+
+\subsection{Fourth derivative used by Simpson's rule}
+
+Let $u(z)=q(t,z)^2$.  With derivatives taken in $z$,
+\begin{align*}
+u_0&=q^2,\\
+u_1&=2qV,\\
+u_2&=2(V^2+q\kappa_3),\\
+u_3&=2(3V\kappa_3+q\kappa_4),\\
+u_4&=2(3\kappa_3^2+4V\kappa_4+q\kappa_5).
+\end{align*}
+Because $\phiN'=-z\phiN$, repeated product differentiation gives
+\[
+(u\phiN)^{(4)}
+=\phiN\!\left[
+u_4-4zu_3+6(z^2-1)u_2+4(3z-z^3)u_1
+ +(z^4-6z^2+3)u_0\right].
+\]
+Every posterior quantity is evaluated on the same $(t,z)$ box.
+
+\subsection{Curvature tail}
+
+For posterior support in $[-m,m]$, $0\le V\le m^2$ by the
+Bhatia--Davis inequality.  Also
+\[
+ |\kappa_3|=\left|\E(\Theta-\mu)^3\right|
+ \le 2m\,\E(\Theta-\mu)^2=2mV.
+\]
+Thus the absolute curvature state is no greater than
+\[
+C_m=\max\{1,(m^2-1)^2\}+4m^4.
+\]
+Outside $[-A,A]$, the magnitude omitted from \eqref{eq:curvature} is at most
+$2C_m\Pr(|Z|>A)\le4C_m\phiN(A)/A$.
+
+\subsection{Branch pruning invariant}
+
+At every time the active heap plus already pruned cells covers $[0,m]$.
+An active cell has a proved upper bound.  A cell is pruned only if its bound
+is no larger than the current incumbent plus the work tolerance.  Therefore
+the global supremum is bounded by the maximum of the active-cell bounds and
+the incumbent plus the work tolerance.  This maximum is exactly the value
+reported by the verifier.  The use of floating-point heap priorities affects
+only processing order; each retained mathematical bound is an Arb ball.

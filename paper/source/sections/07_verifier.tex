@@ -1,0 +1,48 @@
+\section{Independent certificate and verifier}
+\label{sec:verifier}
+
+The compact certificate contains $m$, nonnegative support levels, total level
+masses, arithmetic precision, quadrature and branch settings, and claimed
+risk intervals.  It contains no estimator samples, parameter grid, Monte
+Carlo draws, or trusted branch partition.
+
+The verifier performs the following checks.
+
+\begin{enumerate}
+\item It rejects nonfinite input, support outside $[0,m]$, unordered or
+duplicate levels, nonpositive masses, and masses that do not sum exactly to
+one as decimal inputs.
+\item It reconstructs both atoms at every positive level and computes the
+posterior directly from
+$w_j\exp(\theta_jy-\theta_j^2/2)$.
+\item It evaluates the risks at all support levels with independent composite
+Simpson code, fourth-derivative intervals, and Gaussian tails, then averages
+them to enclose the Bayes risk.
+\item It starts from the complete interval $[0,m]$.  Each branch cell receives
+a curvature lower bound and the exact semiconvex quadratic majorant.
+Only a cell whose upper bound is within the work tolerance of the incumbent
+may be pruned.
+\item It checks that the supplied claim intervals contain the recomputation
+and that the final gap is below the requested tolerance.
+\end{enumerate}
+
+The verifier imports neither \code{solver\_fast.py} nor
+\code{solver\_certified.py}.  It does share the mathematical specification:
+Gaussian density, posterior mean, risk, and the semiconvex theorem.  Complete
+formula independence would be impossible without changing the quantity being
+verified.  The implementation of those formulas and the arithmetic library
+are independent.
+
+\paragraph{Trusted computing base.}
+The final proof trusts CPython, python-flint 0.8.0, the Arb/FLINT
+implementation beneath it, and the verifier source.  The discovery optimizer
+and NumPy are outside the final trusted base.  The resulting assurance level
+is a computer-assisted proof with an explicit software trusted base.
+
+\subsection{AI assistance}
+AI tools assisted with literature search, theorem exploration, drafting, code
+generation and adversarial testing in the project. During preparation of
+this revision, OpenAI GPT-6.1 Terra assisted with manuscript revision and
+GPT-6.1 Sol assisted with code and build work. AI-generated suggestions are not mathematical evidence. The verifier and its arithmetic
+library form part of the trusted computing base; an independently executable
+program is not an independent human review.

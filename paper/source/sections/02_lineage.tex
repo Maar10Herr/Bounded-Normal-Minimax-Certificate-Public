@@ -1,0 +1,66 @@
+\section{Exact contribution and relation to prior work}
+\label{sec:lineage}
+
+This section states lineage before technical results become operative.
+Table~\ref{tab:lineage} records the status used throughout the paper.
+
+\begin{table}[ht]
+\centering
+\caption{Technical lineage and the role of each ingredient.}
+\label{tab:lineage}
+\small
+\begin{tabular}{p{0.28\linewidth}p{0.22\linewidth}p{0.42\linewidth}}
+\toprule
+Object & Role & Source and exact relation \\
+\midrule
+Adaptive support insertion; reoptimization of masses and locations; zero-mass
+or coincident-point reduction & Prior art &
+Kempthorne \cite[pp.~175--177]{kempthorne1987}, Steps 1--4 and discussion.\\
+Directional derivative and equalizer/stopping condition & Prior art &
+Kempthorne \cite[Theorems 2.1--2.2, pp.~172--174]{kempthorne1987}; the exact
+Gaussian algebra is supplied here for auditability.\\
+Finite-support structure & Prior art &
+Kempthorne \cite[Theorem 2.4, p.~175]{kempthorne1987}, with later structural
+work including \cite{dytso2018,dytso2022}.\\
+Deterministic global optimization of fixed finite prior parameterizations &
+Prior art &
+Gourdin, Jaumard, and MacGibbon \cite[Sections 2--3]{gourdin1994}.\\
+Stochastic grid-based approximation and Wasserstein/estimator convergence &
+Related recent method &
+Theorems 1--4 of \cite{montielzubova2026}.\\
+Posterior-flow identities $\mu'=V$, $V'=\kappa_3$ & Standard exponential-family
+algebra & Re-derived in Proposition~\ref{prop:flow}.\\
+Sharp support bound for $\kappa_3$ & Prior art &
+Equivalent to Sharma, Gupta, and Kapoor
+\cite[Theorem 2.2 and (2.20)--(2.21)]{sharma2010}.\\
+Common-mean product enclosure & Supporting derivation &
+Lemma~\ref{lem:common-mean-bound}; a posterior-moment enclosure with a
+four-node reduction at $m=4$.\\
+Arb verifier and $m=4$ certificate & Release contribution &
+Separate direct-ratio formula, Simpson remainder, tail bound, and
+branch-and-bound; source and certificate accompany the paper.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Casella and Strawderman \cite{casella1981} establish foundational exact
+results for small bounds.  Feldman and Brown \cite{feldman1989} and Donoho,
+Liu, and MacGibbon \cite{donoho1990} develop numerical and risk-bound
+calculations.  Gourdin et al.\ \cite{gourdin1994} use theoretically convergent
+Lipschitz and decomposition global optimization for finite-dimensional
+parameterizations.  Kent et al.\ \cite{kent2021} give a modified
+Frank--Wolfe method in probability space with oracle assumptions, while
+Guggenberger and Huang \cite{guggenberger2025} use fictitious play and
+grid-based best responses in a different minimax-regret problem.  Aradillas
+Fernández et al.\ \cite{aradillas2026} prove epsilon-minimax guarantees for
+mixtures over finitely many decision rules under a worst-case-risk oracle.
+The present release connects these lines of work to an outward-rounded
+continuous separator and an independently executable certificate for the
+scalar bounded-normal problem.
+
+Interval arithmetic is classical \cite{moore2009}.  Everitt
+\cite{everitt2018} explains dependency over-enclosure and affine arithmetic
+in statistical computation, and Maruyama and Matsuda \cite{maruyama2025}
+use interval arithmetic in a computer-assisted minimaxity proof for a fixed
+half-Cauchy Bayes estimator.  These works provide the broader
+dependency-aware and computer-assisted statistical context.

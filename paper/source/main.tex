@@ -1,0 +1,113 @@
+\documentclass[10pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.78in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\definecolor{linkblue}{HTML}{1D4E89}
+
+\hypersetup{
+  pdftitle={Deterministic Certification for the Bounded Normal Mean: An Adaptive-Support Computation with an Independent Verifier},
+  pdfauthor={Maarten Linus Herrmann (ORCID: 0009-0005-8721-6588)},
+  pdfsubject={Working manuscript, 27 October 2026},
+  pdfkeywords={bounded normal mean, minimax estimation, least favorable prior, interval arithmetic, branch-and-bound, computer-assisted proof},
+  pdflang={en},
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=linkblue,
+  urlcolor=linkblue
+}
+
+\setlength{\parskip}{2.5pt}
+\setlength{\parindent}{1.2em}
+\setlength{\abovedisplayskip}{5pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{5pt plus 2pt minus 2pt}
+\raggedbottom
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Normal}{\mathsf N}
+\newcommand{\phiN}{\phi}
+\newcommand{\risk}{r}
+\newcommand{\BR}{b}
+\newcommand{\vstar}{v^\star}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{\textbf{Deterministic Certification for the Bounded Normal Mean}\\
+\large An Adaptive-Support Computation with an Independent Verifier}
+\author{
+Maarten Linus Herrmann\\
+\small Erasmus School of Economics\\
+\small Erasmus University Rotterdam\\
+\small ORCID: \href{https://orcid.org/0009-0005-8721-6588}{0009-0005-8721-6588}
+}
+\date{Working manuscript \textbullet{} 27 October 2026}
+
+\usepackage{xurl}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We consider estimation of a normal mean in a bounded interval under squared
+error. A finite prior gives a lower bound on minimax risk through its Bayes
+risk and an upper bound through the maximum risk of its Bayes rule. We use
+Kempthorne's established exchange strategy to find a candidate symmetric prior
+and an independent outward-rounded program to verify the resulting bracket.
+The verifier reconstructs Gaussian-mixture ratios, bounds Simpson quadrature
+remainders and Gaussian tails, and covers the continuous parameter interval
+by branch-and-bound. It does not rely on the discovery solver's optimizer or
+branch tree. For the interval $[-4,4]$, it certifies minimax risk in
+$[0.8150887565050,0.8150887615302]$, with width below
+$5.026\times10^{-9}$. Posterior-flow identities provide a curvature
+bound for the discovery calculation; an ablation shows that its specialized
+common-mean enclosure yields a modest reduction in branch nodes for this
+instance. The certificate is a computer-assisted result conditional on the
+correctness of the verifier and its arithmetic implementation. We do not
+claim a new exchange algorithm or a finite-time convergence guarantee for
+the discovery procedure.
+\end{abstract}
+
+\noindent\textbf{Keywords:} bounded normal mean; minimax estimation; least
+favorable prior; interval arithmetic; branch-and-bound; computer-assisted
+proof.
+
+\noindent\textbf{JEL codes:} C14, C44, C63.
+\qquad
+\textbf{MSC 2020:} 62C20, 65G20, 90C26.
+
+\input{sections/01_introduction}
+\input{sections/02_lineage}
+\input{sections/03_formulation}
+\input{sections/04_posterior_flow}
+\input{sections/05_certified_separation}
+\input{sections/06_algorithm}
+\input{sections/07_verifier}
+\input{sections/08_results}
+\input{sections/09_comparison}
+\input{sections/10_limitations_conclusion}
+
+\appendix
+\input{appendices/A_proofs}
+\input{appendices/B_numerics}
+\input{appendices/C_lineage_details}
+\input{appendices/D_reproducibility}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

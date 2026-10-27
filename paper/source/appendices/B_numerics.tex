@@ -1,0 +1,39 @@
+\section{Implementation and verification details}
+\label{app:numerics}
+
+\subsection{Error budget at m=4}
+
+The independently recomputed Bayes-risk enclosure width is
+$4.9777\times10^{-11}$.  Of this, the reported Simpson-remainder width is
+$4.9696\times10^{-11}$, the Gaussian tail upper bound is
+$8.084\times10^{-14}$, and arithmetic rounding in the Simpson sum is below
+$3.1\times10^{-40}$.  At risk points encountered by separation, the largest
+fourth-order remainder width is $6.5690\times10^{-11}$ and the largest tail
+upper bound is $8.084\times10^{-14}$.  The branch envelope width is
+$5.0\times10^{-9}$.
+
+\subsection{Independent reconstruction}
+
+The discovery solver computes posterior states with vectorized NumPy and a
+specialized flow tube.  The final verifier instead:
+\begin{enumerate}
+\item constructs Arb balls from decimal strings;
+\item evaluates each mixture exponential directly;
+\item forms posterior central moments through order five;
+\item implements a separate Simpson panel loop;
+\item uses direct interval boxes for curvature rather than the common-mean
+flow formula; and
+\item rebuilds its own branch tree from $[0,m]$.
+\end{enumerate}
+The two paths share the mathematical definition of risk while using different
+numerical representations and control flow.
+
+\subsection{Failure modes examined}
+
+Independent intervals for $f_0$, $f_1^2$, and $1/f_0$ repeatedly count the
+same uncertainty and become particularly wide in the tails.  A global
+Lipschitz bound scales only linearly with cell width and exhausted the
+5001-node budget even at tolerance $10^{-4}$.  A global curvature bound also
+exhausted that budget.  One-noise affine arithmetic helps on narrow cells but
+was sometimes wider than the posterior-flow representation.  These empirical
+results characterize the tested representations and tolerances.

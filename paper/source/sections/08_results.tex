@@ -1,0 +1,77 @@
+\section{Numerical results and ablations}
+\label{sec:results}
+
+All timings in this section are single-process measurements on the local
+macOS 15.7.3 arm64 machine and are descriptive rather than hardware-normalized
+complexity claims.
+
+\subsection{The certified result for m=4}
+
+The final prior has nonnegative levels
+\[
+ (0.5984699814893856,\;2.1264117002421385,\;4)
+\]
+and total level masses
+\[
+ (0.36699366016033996,\;0.3994285510645993,\;
+   0.23357778877506074).
+\]
+Each positive level is split equally between its positive and negative atom.
+The independent 192-bit verification used tail cutoff $A=8$, 2048 Simpson
+panels per point risk, 512 curvature cells, and 567 branch nodes.  It took
+49.68 seconds in the recorded clean run.
+
+\begin{table}[ht]
+\centering
+\caption{Outward-rounded $m=4$ certificate.  Displayed endpoints are rounded
+outward from the longer Arb output.}
+\label{tab:m4}
+\small
+\input{tables/m4_certificate}
+\end{table}
+
+The verifier's Bayes-risk width is $4.98\times10^{-11}$.  The branch envelope
+uses a $5.0\times10^{-9}$ work width.  The certified minimax-gap upper bound is
+$5.02517\times10^{-9}$, below $10^{-8}$.
+
+\subsection{Fast deterministic sweep}
+
+Table~\ref{tab:sweep} reports float64 discovery results.  They are not
+certificates except where a separate certificate is stated.
+
+\begin{table}[ht]
+\centering
+\caption{Adaptive-support float64 sweep; no ex ante parameter grid.}
+\label{tab:sweep}
+\small
+\input{tables/fast_sweep}
+\end{table}
+
+\subsection{Dependency ablation}
+
+Table~\ref{tab:ablation} holds the prior and endpoint-risk evaluator fixed.
+The two generic global bounds exhaust the 5001-node budget.  Natural interval,
+one-noise affine, Cartesian posterior-flow, and common-mean flow bounds
+terminate.  These rows are float64 diagnostics; the Arb calculation supplies
+the certified result.
+
+\begin{table}[ht]
+\centering
+\caption{$m=4$, target separator width $10^{-8}$.}
+\label{tab:ablation}
+\small
+\input{tables/ablation}
+\end{table}
+
+The common-mean formula reduces the Cartesian-flow tree from 281 to 277 nodes.
+Its much shorter runtime in this implementation comes primarily from
+vectorized engineering.  Across cell
+widths from approximately $3.87$ to $10^{-5}$, the ratio of common-mean to
+Cartesian curvature width ranged from $0.864$ to $0.996$.  The measured
+mathematical tightening is therefore modest.
+
+\subsection{Numerical checks}
+
+A seeded set of 100 valid symmetric priors and parameter intervals produced
+no dense-sample violation of the float64 curvature enclosure. Such checks
+provide falsification evidence; outward-rounded inclusion supplies the proof.

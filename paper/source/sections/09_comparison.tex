@@ -1,0 +1,52 @@
+\section{Comparison with Montiel Olea and Zubova}
+\label{sec:comparison}
+
+Montiel Olea and Zubova \cite{montielzubova2026} use stochastic mirror ascent
+on an equally spaced grid.  Their theory controls discretization and
+stochastic optimization error, proves Wasserstein convergence of approximate
+priors, and proves convergence of the resulting estimators.  The method is
+expressed through broadly applicable first-order stochastic optimization.
+The present solver exploits scalar Gaussian posterior identities to produce a
+deterministic certificate for this bounded-normal instance.
+
+\begin{table}[ht]
+\centering
+\caption{Complementary computational objectives.}
+\label{tab:moz-comparison}
+\small
+\begin{tabular}{p{0.29\linewidth}p{0.31\linewidth}p{0.31\linewidth}}
+\toprule
+Feature & Montiel Olea--Zubova & Present project \\
+\midrule
+Parameter representation & Fixed equally spaced grid &
+Adaptive continuous branch cells; finite active support\\
+Optimization & Stochastic mirror ascent over grid weights &
+Kempthorne exchange; float64 mass/location reoptimization\\
+Integration & Monte Carlo supergradient and reported risk evaluation &
+Deterministic Gauss--Hermite discovery; interval Simpson verification\\
+Guarantee & High-probability approximation and convergence theory &
+Post-hoc deterministic value certificate for each accepted prior\\
+Continuous separation & Lipschitz grid correction &
+Outward-rounded branch-and-bound on $[0,m]$\\
+Generality & First-order method with broader optimization relevance &
+Specialized scalar bounded-normal implementation\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For a numerical cross-check, we reconstructed their stated tuning formulas and
+digitized the published risk figure using a checksum-locked pixel calibration.
+The deterministic values for $m=1,2,3,4$ lie within the displayed figure
+intervals to the declared pixel error.
+
+At $m=4$ the present float64 discovery solver took 0.25 seconds in the clean
+reproduction, and the independent certificate took 49.68 seconds.  These
+times describe the current implementation on the recorded machine.  The two
+methods target different computational guarantees, so the comparison is made
+through their outputs and assurance levels rather than a speed ratio.
+
+The deterministic certificate independently validates the bounded-normal
+minimax value used in the local-projection/vector-autoregression application
+of Montiel Olea and Zubova.  Its scope is the scalar minimax ingredient.  The
+stochastic method retains the broader optimization and estimator-convergence
+theory established in their paper.

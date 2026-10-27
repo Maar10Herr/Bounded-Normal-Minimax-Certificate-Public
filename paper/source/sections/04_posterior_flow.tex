@@ -1,0 +1,101 @@
+\section{Posterior-flow representation}
+\label{sec:flow}
+
+The separator must control a ratio of Gaussian mixtures without replacing
+its shared numerator and denominator by independent intervals.  This section
+identifies a small posterior state that retains the relevant dependence.
+
+For an observation $y$, let
+\[
+ p_j(y)=\frac{w_j\exp(\theta_jy-\theta_j^2/2)}
+ {\sum_k w_k\exp(\theta_ky-\theta_k^2/2)}.
+\]
+The omitted common factor $\phiN(y)$ cancels.  Define the posterior mean,
+variance, and cumulants
+\[
+ \mu(y)=\sum_jp_j(y)\theta_j,\quad
+ V(y)=\sum_jp_j(y)\{\theta_j-\mu(y)\}^2,\quad
+ \kappa_s(y)=\text{$s$th posterior cumulant}.
+\]
+
+\begin{proposition}[Posterior flow and risk curvature]
+\label{prop:flow}
+For a finite bounded prior, all functions above are analytic and
+\[
+ \mu'=V,\qquad V'=\kappa_3,\qquad \kappa_s'=\kappa_{s+1}.
+\]
+With $q(t,z)=\mu(t+z)-t$ and $Z\sim\Normal(0,1)$,
+\begin{align}
+ \risk(t,\delta_\pi)&=\E q(t,Z)^2,\\
+ \risk'(t,\delta_\pi)&=2\E\{q(t,Z)(V(t+Z)-1)\},\\
+ \risk''(t,\delta_\pi)&=
+ 2\E\{(V(t+Z)-1)^2+q(t,Z)\kappa_3(t+Z)\}.
+ \label{eq:curvature}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The probabilities form a finite natural exponential family with natural
+parameter $y$.  Successive derivatives of
+\[
+ \log\!\left(\sum_jw_j e^{\theta_jy-\theta_j^2/2}\right)
+\]
+produce the cumulants.  Further,
+$\partial_tq=V(t+z)-1$ and
+$\partial_tV=\kappa_3$.  Two differentiations of $\E q^2$ give the displayed
+formulas.  Bounded support supplies an integrable uniform bound for each
+derivative.
+\end{proof}
+
+The only sign-indefinite product in \eqref{eq:curvature} is $q\kappa_3$.
+The following representation couples its factors.
+
+\begin{lemma}[Common-mean representation and enclosure]
+\label{lem:common-mean-bound}
+Let the posterior be supported on $[\alpha,\beta]$.  If $V>0$, define
+\[
+ \nu=\frac{\E\{\Theta(\Theta-\mu)^2\mid y\}}{V}.
+\]
+Then $\nu\in[\alpha,\beta]$ and
+\[
+ \kappa_3=V(\nu-\mu).
+\]
+If $t\in[a,b]$, $\mu\in M=[\mu_L,\mu_U]$, and $0\le V\le V_U$, then
+\begin{align}
+ q\kappa_3
+ &\le V_U\max_{\mu\in M}
+ \bigl\{(\mu-a)_+(\beta-\mu),\,
+        (b-\mu)_+(\mu-\alpha)\bigr\}, \label{eq:joint-upper}\\
+ q\kappa_3
+ &\ge -V_U\max_{\mu\in M}
+ \bigl\{(\mu-a)_+(\mu-\alpha),\,
+        (b-\mu)_+(\beta-\mu)\bigr\}. \label{eq:joint-lower}
+\end{align}
+Each maximum is either an endpoint value or the value at the vertex of one
+quadratic.
+\end{lemma}
+
+\begin{proof}
+The weights proportional to
+$p_j(\theta_j-\mu)^2$ are nonnegative and sum to $V$, hence $\nu$ is their
+mean and lies in the convex hull $[\alpha,\beta]$.  Expanding
+$\E\{\Theta(\Theta-\mu)^2\}= \kappa_3+\mu V$ proves the identity.
+For a positive product, if $\mu\ge t$ choose the largest feasible
+$\nu=\beta$; if $\mu\le t$ choose $\nu=\alpha$.  Maximizing over
+$t\in[a,b]$ gives \eqref{eq:joint-upper}.  The opposite choices of $\nu$
+give the most negative product and \eqref{eq:joint-lower}.  The case $V=0$
+has $\kappa_3=0$ and follows by continuity.
+\end{proof}
+
+\paragraph{Equality and degeneracy.}
+Equality in the identity holds by construction.  An envelope endpoint can be
+attained only when the posterior squared-deviation weights put their mean
+$\nu$ at the relevant support endpoint and when $V=V_U$; $V=0$ collapses all
+terms to zero.  These conditions are useful diagnostics but are not assumed
+by the solver.
+
+\paragraph{Scope of the enclosure.}
+The relaxation separates $V$ from $\mu$ through $V_U$ and encloses, rather than
+identifies, their exact joint range.  The ablation compares it with a Cartesian product of independent intervals
+for $q$ and $\kappa_3$. The results in
+Section~\ref{sec:results} measures the remaining over-enclosure.

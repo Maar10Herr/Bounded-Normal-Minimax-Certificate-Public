@@ -15,6 +15,7 @@ normal mean bounded to `[-4, 4]` under squared-error loss.
 > scope.
 
 **[Read the paper](paper/Bounded_Normal_Mean_Minimax_Certificate.pdf)** ·
+**[Paper source](paper/source/main.tex)** ·
 **[Inspect the certificate](certificates/final/m4_epsilon_1e-8_arb.json)** ·
 **[Download the latest release](https://github.com/Maar10Herr/Bounded-Normal-Minimax-Certificate-Public/releases/latest)**
 
@@ -123,7 +124,7 @@ Key references:
 - Moore, Kearfott & Cloud, *Introduction to Interval Analysis* (2009),
   [doi:10.1137/1.9780898717716](https://doi.org/10.1137/1.9780898717716)
 
-The paper gives the complete claim-lineage table and bibliography.
+The paper gives the complete claim-lineage table and bibliography. The PDF and source contain the same revised manuscript.
 
 ## Reproducibility record
 

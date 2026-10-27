@@ -1,0 +1,93 @@
+\section{The bounded-normal minimax problem}
+\label{sec:formulation}
+
+This section defines every statistical object and proves the certificate from
+the original mixture formulas.
+
+\begin{definition}[Symmetric finite prior]
+Let $\pi=\sum_{j=1}^J w_j\delta_{\theta_j}$, where
+$\theta_j\in[-m,m]$, $w_j>0$, and $\sum_jw_j=1$.  Symmetry means that
+$\pi(A)=\pi(-A)$ for every Borel set $A$.  Define, for $r=0,1,2$,
+\[
+ f_r(y)=\sum_{j=1}^J w_j\theta_j^r\phiN(y-\theta_j),
+ \qquad
+ \phiN(x)=(2\pi)^{-1/2}e^{-x^2/2}.
+\]
+\end{definition}
+
+Since $f_0(y)>0$, the posterior mean and Bayes estimator are
+\[
+  \delta_\pi(y)=\frac{f_1(y)}{f_0(y)}.
+\]
+The frequentist risk at $t\in[-m,m]$ and the Bayes risk are
+\begin{align}
+  \risk(t,\delta_\pi)
+   &=\int_{\R}\{\delta_\pi(y)-t\}^2\phiN(y-t)\,dy, \label{eq:risk}\\
+  \BR(\pi)
+   &=\int_{\R}\left\{f_2(y)-\frac{f_1(y)^2}{f_0(y)}\right\}dy. \label{eq:bayes}
+\end{align}
+Fubini's theorem gives the identity
+\begin{equation}
+  \BR(\pi)=\sum_{j=1}^Jw_j\risk(\theta_j,\delta_\pi).
+  \label{eq:bayes-average}
+\end{equation}
+The integrands are dominated because $|\delta_\pi(y)|\le m$.
+
+\begin{proposition}[Exact feasible directional derivative]
+\label{prop:direction}
+For $t\in[-m,m]$ and $\pi_\alpha=(1-\alpha)\pi+\alpha\delta_t$,
+\[
+ \left.\frac{d}{d\alpha}\BR(\pi_\alpha)\right|_{\alpha=0+}
+ =\risk(t,\delta_\pi)-\BR(\pi).
+\]
+\end{proposition}
+
+\begin{proof}
+Write $h_r(y)=t^r\phiN(y-t)-f_r(y)$, so that
+$f_{r,\alpha}=f_r+\alpha h_r$.  Pointwise differentiation of
+$f_{2,\alpha}-f_{1,\alpha}^2/f_{0,\alpha}$ gives
+\[
+ h_2-\frac{2f_1h_1}{f_0}+\frac{f_1^2h_0}{f_0^2}.
+\]
+Substitute $h_r$ and $\delta_\pi=f_1/f_0$.  The terms involving the original
+mixture equal
+\[
+ -f_2+2\delta_\pi f_1-\delta_\pi^2f_0
+ =-f_2+\frac{f_1^2}{f_0},
+\]
+whereas the atom terms equal
+\[
+ \{t^2-2t\delta_\pi(y)+\delta_\pi(y)^2\}\phiN(y-t).
+\]
+Integration yields $\risk(t,\delta_\pi)-\BR(\pi)$.  Differentiation under the
+integral is justified in Appendix~\ref{app:proofs}; the key facts are bounded
+support and strict positivity of the Gaussian mixture.
+\end{proof}
+
+\begin{corollary}[Exact minimax certificate]
+\label{cor:certificate}
+For every finite prior $\pi$ supported on $[-m,m]$,
+\[
+ \BR(\pi)\le \vstar\le
+ U(\pi):=\sup_{t\in[-m,m]}\risk(t,\delta_\pi),
+\]
+and therefore
+\[
+ 0\le \vstar-\BR(\pi)
+ \le U(\pi)-\BR(\pi)
+ =\sup_{t\in[-m,m]}
+   \{\risk(t,\delta_\pi)-\BR(\pi)\}.
+\]
+\end{corollary}
+
+\begin{proof}
+For any decision rule $d$, its maximum risk is at least its $\pi$-average
+risk, which is at least the Bayes risk $\BR(\pi)$.  Taking the infimum over
+$d$ proves the lower bound.  The Bayes rule $\delta_\pi$ is an admissible
+competitor in the minimax infimum, which proves the upper bound.  Subtraction
+and Proposition~\ref{prop:direction} give the last display.
+\end{proof}
+
+Corollary~\ref{cor:certificate}, essentially Kempthorne's stopping condition,
+is the logical core of the computation: a lower enclosure for $\BR(\pi)$ and
+an upper enclosure for $U(\pi)$ produce a rigorous interval for $\vstar$.

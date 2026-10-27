@@ -1,0 +1,79 @@
+\section{Certified continuous separation}
+\label{sec:separation}
+
+This section turns point-risk and curvature enclosures into a global upper
+bound.  The final verifier uses direct mixture-ratio interval boxes rather
+than the specialized common-mean formula, providing formula-level
+independence.
+
+\begin{lemma}[Semiconvex secant majorant]
+\label{lem:secant}
+Let $f$ be twice differentiable on $[a,b]$ and $f''\ge-K$ there, with $K\ge0$.
+For $x=a+s(b-a)$, $s\in[0,1]$,
+\[
+ f(x)\le(1-s)f(a)+sf(b)+\frac{K}{2}(b-a)^2s(1-s).
+ \label{eq:secant}
+\]
+Consequently, the cell maximum is bounded by the maximum of the two endpoints
+and, when its vertex lies in $[0,1]$, the vertex value of the quadratic on the
+right.
+\end{lemma}
+
+\begin{proof}
+The function $f(x)+Kx^2/2$ is convex.  Apply the defining secant inequality
+for a convex function and collect the quadratic terms.  No assumption about
+the sign of $f'$ is required.
+\end{proof}
+
+\begin{proposition}[Risk quadrature enclosure]
+\label{prop:quadrature}
+Fix $t\in[-m,m]$ and $A>0$.  Composite Simpson quadrature on $[-A,A]$,
+with an interval enclosure of the fourth derivative on every panel, encloses
+the truncated risk integral.  The omitted tails satisfy
+\[
+ 0\le\int_{|z|>A}q(t,z)^2\phiN(z)\,dz
+ \le 8m^2\frac{\phiN(A)}{A}.
+\]
+\end{proposition}
+
+\begin{proof}
+The panel error is $-h^5H^{(4)}(\xi)/2880$ when $h$ denotes the full panel
+width.  Replacing $H^{(4)}(\xi)$ by its interval range is inclusion
+monotone.  Since $|\mu-t|\le2m$, the tail is at most
+$4m^2\Pr(|Z|>A)$; Mills' inequality
+$\Pr(|Z|>A)\le2\phiN(A)/A$ gives the result.
+\end{proof}
+
+The verifier obtains a lower enclosure for \eqref{eq:curvature} by partitioning
+$[-A,A]$ in $z$, evaluating the common posterior ratio on the box
+$t\in[a,b]$, and adding a two-sided curvature-tail enclosure.  If
+$0\le V\le m^2$, then
+\[
+ |(V-1)^2+q\kappa_3|
+ \le \max\{1,(m^2-1)^2\}+4m^4,
+\]
+because $|q|\le2m$ and
+$|\kappa_3|\le2mV\le2m^3$.  This gives an explicit tail bound for
+\eqref{eq:curvature}.
+
+\begin{theorem}[Verifier implication]
+\label{thm:verifier}
+Suppose an outward-rounded computation returns bounds satisfying
+\[
+ B_L\le\BR(\pi)
+ \quad\text{and}\quad
+ U_U\ge\sup_{t\in[-m,m]}\risk(t,\delta_\pi).
+\]
+Then
+\[
+ \vstar\in[B_L,U_U],\qquad
+ 0\le\vstar-B_L\le U_U-B_L.
+\]
+If $U_U-B_L\le\eps$, the Bayes rule is certifiably $\eps$-minimax in value.
+\end{theorem}
+
+\begin{proof}
+This is Corollary~\ref{cor:certificate} with interval endpoints weakened
+outward.  It turns the established minimax bracket into an executable
+certification rule.
+\end{proof}

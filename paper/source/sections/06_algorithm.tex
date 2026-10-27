@@ -1,0 +1,50 @@
+\section{Adaptive computational procedure}
+\label{sec:algorithm}
+
+The outer loop below is Kempthorne's algorithm specialized to symmetric
+bounded-normal priors.  Symmetry reduces the search to nonnegative levels;
+a positive level represents an equal pair at $\pm t$, while level zero
+represents one atom.
+
+\begin{figure}[ht]
+\centering
+\fbox{\begin{minipage}{0.91\linewidth}
+\textbf{Adaptive support computation followed by certification.}
+Given $m>0$, a requested gap $\eps>0$, and an initial symmetric prior:
+\begin{enumerate}
+\item reoptimize retained level masses;
+\item optionally optimize interior support locations while keeping them ordered;
+\item prune zero masses and merge numerically coincident levels;
+\item compute a continuous global risk maximizer or upper bound on $[0,m]$;
+\item if the numerical separation gap is not small, add the symmetric pair at
+the maximizing level and return to step 1;
+\item serialize only $m$, levels, masses, verifier settings, and claims;
+\item run the independent outward-rounded verifier; and
+\item return the prior, Bayes rule, $[B_L,U_U]$, and report only if the
+verifier proves $U_U-B_L\le\eps$.  Otherwise refine and repeat.
+\end{enumerate}
+\end{minipage}}
+\caption{The outer loop is inherited from Kempthorne; certification is a
+separate post-processing stage.}
+\label{alg:exchange}
+\end{figure}
+
+\paragraph{Fast mode.}
+The discovery solver uses float64, deterministic Gauss--Hermite quadrature,
+warm starts, quasi-Newton-style mass and location updates, aggressive pruning,
+and the common-mean curvature enclosure.  Its bounds are diagnostics, not
+certificates.  No parameter grid is fixed in advance; branch cells are
+created adaptively.
+
+\paragraph{Certificate mode.}
+The final computation uses 192-bit Arb balls.  The verifier recomputes
+posterior ratios, Simpson sums and remainder intervals, tail bounds, cell
+curvatures, and continuous branch coverage.  It accepts no discovery-solver
+branch tree.
+
+\paragraph{Convergence statement.}
+Kempthorne \cite[Theorem 3.1]{kempthorne1987} proves asymptotic convergence
+under assumptions A1--A5 for the abstract exchange procedure.  The executable
+guarantee here is conditional and post hoc: whenever the independent verifier
+accepts, Theorem~\ref{thm:verifier} proves the reported gap.  A finite
+iteration bound for finding a certifiable prior remains open.

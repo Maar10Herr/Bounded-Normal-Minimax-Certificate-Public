@@ -1,0 +1,14 @@
+\section{Reproducibility}
+\label{app:reproducibility}
+
+The repository linked in the declarations contains the verifier, certificate,
+lockfile and setup instructions. From its root, the certificate can be replayed
+with
+\begin{verbatim}
+uv run --frozen python src/verification/verify_certificate_arb.py \
+  certificates/final/m4_epsilon_1e-8_arb.json
+\end{verbatim}
+The verification reconstructs the Bayes-risk lower bound and the global
+risk upper bound for the specified finite symmetric prior. Its conclusion is
+conditional on the trusted computational base described in
+Section~\ref{sec:verifier}.
